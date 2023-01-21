@@ -18,7 +18,11 @@ touch .env
 
 Running the app with docker
 
-```
+```bash
+# create data/
+mkdir data
+
+# build and run containers
 docker compose up --build
 ```
 

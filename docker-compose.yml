@@ -2,18 +2,22 @@ version: '3.9'
 
 services:
   geoserver:
-    image: kartoza/geoserver:latest
+    image: kartoza/geoserver:2.19.0
     ports:
       - '8080:8080'
     environment:
-      - GEOSERVER_ADMIN_USER=kartoza
-      - GEOSERVER_ADMIN_PASSWORD=myawesomegeoserver
+      - GEOSERVER_ADMIN_USER=${GEOSERVER_ADMIN_USER}
+      - GEOSERVER_ADMIN_PASSWORD=${GEOSERVER_ADMIN_PASSWORD}
       - GEOSERVER_EXTENSIONS=postgis
+    container_name: geoserver
     volumes:
       - ./data:/opt/geoserver/data_dir
+    links:
+      - postgres
 
   postgres:
-    image: postgres:14.6
+    image: postgis/postgis:15-3.3
+    # image: mdillon/postgis
     restart: always
     ports:
       - '5432:5432'
@@ -23,14 +27,18 @@ services:
       PGDATA: /data/postgres
     container_name: postgresdb
     volumes:
-      - ./postgres:/data/postgres
+      - ./data/postgis:/data/postgres
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin
     depends_on:
+      - geoserver
       - postgres
+    ports:
+      - '80:80'
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-    ports:
-      - '80:80'
+    links:
+      - postgres
