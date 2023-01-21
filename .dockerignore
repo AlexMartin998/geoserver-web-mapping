@@ -1,0 +1,13 @@
+# build artifacts
+target/
+
+# Docker files
+.dockerignore
+docker-compose.yml
+Dockerfile
+
+# volumes and data
+data/
+
+# logs
+logs/

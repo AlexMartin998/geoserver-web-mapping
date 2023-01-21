@@ -1,0 +1,19 @@
+notes*
+data/
+logs/
+
+# system files
+.DS_Store
+.env
+.env.*
+.log
+
+# IDE files
+*.iml
+*.swp
+*.swo
+*.idea/
+.vscode/
+
+# build artifacts
+target/
