@@ -1,6 +1,7 @@
 notes*
 data/
 logs/
+postgres/
 
 # system files
 .DS_Store

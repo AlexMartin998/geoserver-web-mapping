@@ -10,9 +10,15 @@
 
 ## Running the app with Docker
 
+Create `.env` based on `.example.env`
+
+```
+touch .env
+```
+
 Running the app with docker
 
-```bash
+```
 docker compose up --build
 ```
 

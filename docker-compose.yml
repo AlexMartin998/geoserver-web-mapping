@@ -8,5 +8,29 @@ services:
     environment:
       - GEOSERVER_ADMIN_USER=kartoza
       - GEOSERVER_ADMIN_PASSWORD=myawesomegeoserver
+      - GEOSERVER_EXTENSIONS=postgis
     volumes:
       - ./data:/opt/geoserver/data_dir
+
+  postgres:
+    image: postgres:14.6
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /data/postgres
+    container_name: postgresdb
+    volumes:
+      - ./postgres:/data/postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - '80:80'
